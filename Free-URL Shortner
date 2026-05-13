@@ -1,0 +1,52 @@
+<div class="tool-box">
+  <h2>Free URL Shortener Tool</h2>
+  <p>
+    Convert long ugly links into short and clean URLs instantly.
+    Easy to share, fast to use, and completely free online tool.
+  </p>
+
+  <div class="tool-btn">
+    <a href="#">Shorten URL Now</a>
+  </div>
+</div>
+
+<style>
+.tool-box{
+  background:#101010;
+  color:#fff;
+  padding:30px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 0 15px rgba(0,255,255,0.2);
+  margin:20px 0;
+}
+
+.tool-box h2{
+  color:#00e5ff;
+  font-size:32px;
+  margin-bottom:15px;
+}
+
+.tool-box p{
+  font-size:18px;
+  line-height:1.7;
+  color:#ddd;
+}
+
+.tool-btn a{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 30px;
+  background:linear-gradient(45deg,#00e5ff,#0066ff);
+  color:#fff;
+  text-decoration:none;
+  border-radius:50px;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.tool-btn a:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px rgba(0,229,255,0.7);
+}
+</style>
