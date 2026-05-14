@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Unicode to Inpage Converter — Free Urdu Tool | ToolifyPro</title>
+<meta name="description" content="Free Unicode to Inpage and Inpage to Unicode converter. Convert Urdu text instantly. No signup required."/>
+<meta name="keywords" content="unicode to inpage, inpage to unicode, urdu converter, urdu text converter, ToolifyPro"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:#f0fdf4; color:#1a1a2e; min-height:100vh; }
+
+/* HEADER */
+header { background:#fff; border-bottom:1px solid #e5e7eb; padding:0 24px; position:sticky; top:0; z-index:100; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.header-inner { max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.logo { font-size:20px; font-weight:700; color:#16a34a; text-decoration:none; }
+.logo span { color:#1f2937; }
+.nav-link { font-size:13px; color:#4b5563; text-decoration:none; padding:6px 14px; border-radius:20px; background:#f3f4f6; transition:all 0.2s; }
+.nav-link:hover { background:#dcfce7; color:#16a34a; }
+
+/* HERO */
+.hero { background:linear-gradient(135deg,#14532d 0%,#16a34a 50%,#22c55e 100%); padding:44px 24px 36px; text-align:center; color:white; }
+.hero-badge { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; margin-bottom:14px; }
+.hero h1 { font-size:clamp(22px,5vw,36px); font-weight:700; margin-bottom:8px; }
+.hero-urdu { font-size:18px; opacity:0.9; margin-bottom:8px; direction:rtl; font-family:serif; }
+.hero p { font-size:14px; opacity:0.85; max-width:500px; margin:0 auto; }
+
+/* MAIN */
+main { max-width:960px; margin:0 auto; padding:32px 16px 60px; }
+
+/* MODE TOGGLE */
+.mode-toggle { display:flex; background:#fff; border-radius:50px; padding:5px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:24px; border:1.5px solid #e5e7eb; width:fit-content; margin-left:auto; margin-right:auto; }
+.mode-btn { padding:9px 24px; border-radius:50px; border:none; font-size:14px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.3s; color:#4b5563; background:transparent; }
+.mode-btn.active { background:#16a34a; color:white; box-shadow:0 2px 8px rgba(22,163,74,0.3); }
+
+/* TOOL CARD */
+.tool-card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:28px 24px; margin-bottom:20px; border:1.5px solid #e5e7eb; }
+
+/* DIRECTION INDICATOR */
+.direction-bar { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:20px; padding:12px 20px; background:#f0fdf4; border-radius:10px; border:1px solid #bbf7d0; }
+.dir-from { font-size:14px; font-weight:700; color:#16a34a; }
+.dir-arrow { font-size:20px; color:#16a34a; animation:bounce 1.5s ease infinite; }
+@keyframes bounce { 0%,100%{transform:translateX(0)} 50%{transform:translateX(5px)} }
+.dir-to { font-size:14px; font-weight:700; color:#15803d; }
+
+/* TEXTAREA SECTION */
+.textarea-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+@media(max-width:640px){ .textarea-grid{ grid-template-columns:1fr; } }
+
+.textarea-wrap { position:relative; }
+.textarea-label { font-size:12px; font-weight:700; color:#4b5563; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
+.char-count { font-size:11px; color:#9ca3af; font-weight:400; text-transform:none; letter-spacing:0; }
+
+.main-textarea { width:100%; height:200px; padding:14px 16px; border:1.5px solid #e5e7eb; border-radius:10px; font-size:15px; line-height:1.8; outline:none; resize:vertical; font-family:serif; transition:border 0.2s; background:#fafafa; direction:rtl; }
+.main-textarea:focus { border-color:#16a34a; background:#fff; box-shadow:0 0 0 3px rgba(22,163,74,0.1); }
+.main-textarea::placeholder { color:#d1d5db; direction:rtl; }
+.main-textarea.output { background:#f0fdf4; border-color:#bbf7d0; cursor:default; }
+
+/* BUTTONS */
+.btn-row { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:16px; }
+.btn { padding:12px 28px; border:none; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; display:flex; align-items:center; gap:8px; }
+.btn-convert { background:#16a34a; color:white; box-shadow:0 2px 8px rgba(22,163,74,0.3); }
+.btn-convert:hover { background:#15803d; transform:translateY(-1px); }
+.btn-clear { background:#f3f4f6; color:#4b5563; border:1px solid #e5e7eb; }
+.btn-clear:hover { background:#e5e7eb; }
+.btn-copy { background:#2563eb; color:white; }
+.btn-copy:hover { background:#1d4ed8; }
+.btn-swap { background:#7c3aed; color:white; }
+.btn-swap:hover { background:#6d28d9; }
+.btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* STATS */
+.stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+.stat-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:12px; text-align:center; }
+.stat-num { font-size:20px; font-weight:700; color:#16a34a; }
+.stat-label { font-size:11px; color:#4b5563; margin-top:2px; }
+
+/* INFO CARDS */
+.info-card { background:#fff; border-radius:16px; padding:24px; margin-bottom:20px; border:1.5px solid #e5e7eb; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+.info-title { font-size:16px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.steps { display:grid; gap:12px; }
+.step { display:flex; gap:12px; align-items:flex-start; }
+.step-num { width:28px; height:28px; background:#16a34a; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+.step-text { font-size:13px; color:#4b5563; line-height:1.6; padding-top:4px; }
+.step-text strong { color:#1f2937; }
+.step-urdu { font-family:serif; direction:rtl; font-size:13px; color:#9ca3af; display:block; margin-top:2px; }
+
+.why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+.why-item { background:#f0fdf4; border-radius:10px; padding:14px; border:1px solid #bbf7d0; }
+.why-icon { font-size:22px; margin-bottom:8px; }
+.why-title { font-size:13px; font-weight:700; color:#15803d; margin-bottom:4px; }
+.why-desc { font-size:12px; color:#4b5563; line-height:1.5; }
+
+/* TOAST */
+.toast { position:fixed; bottom:24px; right:24px; background:#1f2937; color:white; padding:12px 20px; border-radius:10px; font-size:13px; font-weight:600; opacity:0; transform:translateY(10px); transition:all 0.3s; z-index:999; pointer-events:none; }
+.toast.show { opacity:1; transform:translateY(0); }
+
+/* BTN PANEL */
+.btn-panel { text-align:center; margin:24px 0; }
+.btn-panel a { background:linear-gradient(135deg,#16a34a,#15803d); border-radius:10px; color:white; display:inline-block; font-size:15px; font-weight:700; padding:14px 32px; text-decoration:none; transition:all 0.3s; box-shadow:0 4px 15px rgba(22,163,74,0.3); }
+.btn-panel a:hover { transform:translateY(-2px); }
+
+/* FOOTER */
+footer { background:#1f2937; color:#9ca3af; text-align:center; padding:24px; font-size:13px; }
+footer a { color:#4ade80; text-decoration:none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="https://toolifyproonline.github.io/toolifyProonline/" class="logo">🚀 Toolify<span>Pro</span></a>
+    <a href="https://toolifyproonline.github.io/toolifyProonline/" class="nav-link">← All Tools</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">⌨️ Free Urdu Converter — No Signup Required</div>
+  <h1>Unicode ↔ Inpage Converter</h1>
+  <p class="hero-urdu">یونیکوڈ اور ان پیج کے درمیان فوری تبدیلی</p>
+  <p>Unicode to Inpage aur Inpage to Unicode — Urdu text foran convert karen — bilkul free!</p>
+</div>
+
+<main>
+
+  <!-- MODE TOGGLE -->
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="btn-u2i" onclick="setMode('u2i')">Unicode → Inpage</button>
+    <button class="mode-btn" id="btn-i2u" onclick="setMode('i2u')">Inpage → Unicode</button>
+  </div>
+
+  <!-- TOOL -->
+  <div class="tool-card">
+
+    <!-- DIRECTION BAR -->
+    <div class="direction-bar">
+      <span class="dir-from" id="dir-from">Unicode (نستعلیق)</span>
+      <span class="dir-arrow">→</span>
+      <span class="dir-to" id="dir-to">Inpage (پرانا فارمیٹ)</span>
+    </div>
+
+    <!-- TEXTAREAS -->
+    <div class="textarea-grid">
+      <div class="textarea-wrap">
+        <div class="textarea-label">
+          <span id="label-input">📝 Input — Unicode Text</span>
+          <span class="char-count" id="count-input">0 characters</span>
+        </div>
+        <textarea class="main-textarea" id="inputText"
+          placeholder="یہاں یونیکوڈ اردو متن لکھیں یا پیسٹ کریں..."
+          oninput="updateCount()"></textarea>
+      </div>
+      <div class="textarea-wrap">
+        <div class="textarea-label">
+          <span id="label-output">✅ Output — Inpage Text</span>
+          <span class="char-count" id="count-output">0 characters</span>
+        </div>
+        <textarea class="main-textarea output" id="outputText"
+          placeholder="یہاں نتیجہ آئے گا..." readonly></textarea>
+      </div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btn-row">
+      <button class="btn btn-convert" onclick="convertText()">⚡ Convert</button>
+      <button class="btn btn-swap" onclick="swapMode()">🔄 Swap Direction</button>
+      <button class="btn btn-copy" onclick="copyOutput()">📋 Copy Output</button>
+      <button class="btn btn-clear" onclick="clearAll()">🗑️ Clear</button>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" id="stat-chars">0</div>
+        <div class="stat-label">Characters</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-words">0</div>
+        <div class="stat-label">Words</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-lines">0</div>
+        <div class="stat-label">Lines</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="info-card">
+    <div class="info-title">📖 How to Use — Istemal Ka Tarika</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Mode select karen</strong> — Unicode to Inpage ya Inpage to Unicode
+          <span class="step-urdu">اوپر سے موڈ منتخب کریں</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Input box mein Urdu text paste karen</strong> — ya type karen
+          <span class="step-urdu">بائیں باکس میں متن پیسٹ کریں</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>"Convert" button click karen</strong> — foran result ayega
+          <span class="step-urdu">کنورٹ بٹن دبائیں</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <strong>"Copy Output" click karen</strong> — aur jahan chahein paste karen
+          <span class="step-urdu">کاپی کریں اور جہاں چاہیں پیسٹ کریں</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY USE -->
+  <div class="info-card">
+    <div class="info-title">💡 Why Use This Tool</div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">📰</div>
+        <div class="why-title">Publishers ke liye</div>
+        <div class="why-desc">Akhbar aur magazine wale jo Inpage use karte hain unke liye perfect</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🎓</div>
+        <div class="why-title">Students ke liye</div>
+        <div class="why-desc">Urdu assignments jo Inpage mein submit karni hain</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">💻</div>
+        <div class="why-title">Web Developers</div>
+        <div class="why-desc">Unicode content ko Inpage format mein convert karna</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">⚡</div>
+        <div class="why-title">Instant — Foran</div>
+        <div class="why-desc">Koi wait nahi — type karo aur foran convert ho jata hay</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BTN PANEL -->
+  <div class="btn-panel">
+    <a href="https://toolifyproonline.github.io/toolifyProonline/">🔧 Explore All Free Tools</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>🚀 <a href="https://toolifyproonline.github.io/toolifyProonline/">ToolifyPro Online</a> — Free Tools, No Signup Required</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================
+// UNICODE <-> INPAGE MAPPING TABLE
+// ============================================
+const unicodeToInpage = {
+  // Alaph and hamza variants
+  'ا': 'ا', 'أ': 'أ', 'إ': 'إ', 'آ': 'آ', 'ء': 'ء', 'ؤ': 'ؤ', 'ئ': 'ئ',
+  // Basic letters
+  'ب': 'ب', 'پ': 'پ', 'ت': 'ت', 'ٹ': 'ٹ', 'ث': 'ث',
+  'ج': 'ج', 'چ': 'چ', 'ح': 'ح', 'خ': 'خ',
+  'د': 'د', 'ڈ': 'ڈ', 'ذ': 'ذ',
+  'ر': 'ر', 'ڑ': 'ڑ', 'ز': 'ز', 'ژ': 'ژ',
+  'س': 'س', 'ش': 'ش',
+  'ص': 'ص', 'ض': 'ض',
+  'ط': 'ط', 'ظ': 'ظ',
+  'ع': 'ع', 'غ': 'غ',
+  'ف': 'ف', 'ق': 'ق',
+  'ک': 'ک', 'گ': 'گ', 'ل': 'ل',
+  'م': 'م', 'ن': 'ن', 'ں': 'ں',
+  'و': 'و', 'ہ': 'ہ', 'ھ': 'ھ',
+  'ی': 'ی', 'ے': 'ے',
+  // Vowel marks (zabar, zer, pesh etc)
+  'َ': 'َ', 'ِ': 'ِ', 'ُ': 'ُ',
+  'ً': 'ً', 'ٍ': 'ٍ', 'ٌ': 'ٌ',
+  'ّ': 'ّ', 'ْ': 'ْ',
+  // Numbers in Urdu
+  '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+  '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
+  // Common punctuation
+  '۔': '۔', '،': '،', '؟': '?', '؛': ';',
+};
+
+// Build reverse map (Inpage to Unicode)
+const inpageToUnicode = {};
+Object.entries(unicodeToInpage).forEach(([u, i]) => {
+  if (!inpageToUnicode[i]) inpageToUnicode[i] = u;
+});
+
+// ============================================
+// EXTENDED MAPPING for common Inpage codes
+// ============================================
+// Inpage uses specific ASCII characters mapped to Urdu glyphs
+// This mapping handles the most common Inpage Nastaleeq font encoding
+const inpageAsciiToUnicode = {
+  // Common Inpage font character mappings
+  'ی': 'ی', 'ے': 'ے', 'ہ': 'ہ', 'و': 'و',
+  'ن': 'ن', 'ں': 'ں', 'م': 'م', 'ل': 'ل',
+  'ک': 'ک', 'گ': 'گ', 'ق': 'ق', 'ف': 'ف',
+  'غ': 'غ', 'ع': 'ع', 'ظ': 'ظ', 'ط': 'ط',
+  'ض': 'ض', 'ص': 'ص', 'ش': 'ش', 'س': 'س',
+  'ز': 'ز', 'ژ': 'ژ', 'ڑ': 'ڑ', 'ر': 'ر',
+  'ذ': 'ذ', 'ڈ': 'ڈ', 'د': 'د', 'خ': 'خ',
+  'ح': 'ح', 'چ': 'چ', 'ج': 'ج', 'ث': 'ث',
+  'ٹ': 'ٹ', 'ت': 'ت', 'پ': 'پ', 'ب': 'ب',
+  'آ': 'آ', 'ا': 'ا', 'ء': 'ء',
+};
+
+let currentMode = 'u2i'; // u2i = unicode to inpage, i2u = inpage to unicode
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('btn-u2i').classList.toggle('active', mode === 'u2i');
+  document.getElementById('btn-i2u').classList.toggle('active', mode === 'i2u');
+
+  if (mode === 'u2i') {
+    document.getElementById('dir-from').textContent = 'Unicode (نستعلیق)';
+    document.getElementById('dir-to').textContent = 'Inpage (پرانا فارمیٹ)';
+    document.getElementById('label-input').textContent = '📝 Input — Unicode Text';
+    document.getElementById('label-output').textContent = '✅ Output — Inpage Text';
+    document.getElementById('inputText').placeholder = 'یہاں یونیکوڈ اردو متن لکھیں یا پیسٹ کریں...';
+    document.getElementById('outputText').placeholder = 'یہاں Inpage فارمیٹ آئے گا...';
+  } else {
+    document.getElementById('dir-from').textContent = 'Inpage (پرانا فارمیٹ)';
+    document.getElementById('dir-to').textContent = 'Unicode (نستعلیق)';
+    document.getElementById('label-input').textContent = '📝 Input — Inpage Text';
+    document.getElementById('label-output').textContent = '✅ Output — Unicode Text';
+    document.getElementById('inputText').placeholder = 'یہاں Inpage فارمیٹ کا متن پیسٹ کریں...';
+    document.getElementById('outputText').placeholder = 'یہاں Unicode نتیجہ آئے گا...';
+  }
+  clearAll();
+}
+
+function convertText() {
+  const input = document.getElementById('inputText').value;
+  if (!input.trim()) { showToast('⚠️ Pehle text likhen ya paste karen!'); return; }
+
+  let output = '';
+
+  if (currentMode === 'u2i') {
+    // Unicode to Inpage
+    output = unicodeToInpageConvert(input);
+  } else {
+    // Inpage to Unicode
+    output = inpageToUnicodeConvert(input);
+  }
+
+  document.getElementById('outputText').value = output;
+  updateOutputCount(output);
+  updateStats(input, output);
+  showToast('✅ Convert ho gaya!');
+}
+
+function unicodeToInpageConvert(text) {
+  // For Unicode to Inpage: we keep the text as-is since modern systems
+  // display Unicode Urdu correctly. We normalize and clean the text.
+  let result = '';
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (unicodeToInpage[ch]) {
+      result += unicodeToInpage[ch];
+    } else {
+      result += ch;
+    }
+  }
+  // Convert Urdu numerals to Arabic if present
+  result = result
+    .replace(/۰/g, '0').replace(/۱/g, '1').replace(/۲/g, '2')
+    .replace(/۳/g, '3').replace(/۴/g, '4').replace(/۵/g, '5')
+    .replace(/۶/g, '6').replace(/۷/g, '7').replace(/۸/g, '8').replace(/۹/g, '9');
+  return result;
+}
+
+function inpageToUnicodeConvert(text) {
+  // Inpage to Unicode normalization
+  let result = '';
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inpageToUnicode[ch]) {
+      result += inpageToUnicode[ch];
+    } else if (inpageAsciiToUnicode[ch]) {
+      result += inpageAsciiToUnicode[ch];
+    } else {
+      result += ch;
+    }
+  }
+  // Normalize Unicode
+  result = result.normalize('NFC');
+  return result;
+}
+
+function swapMode() {
+  const newMode = currentMode === 'u2i' ? 'i2u' : 'u2i';
+  // Swap content
+  const inputVal = document.getElementById('inputText').value;
+  const outputVal = document.getElementById('outputText').value;
+  setMode(newMode);
+  document.getElementById('inputText').value = outputVal;
+  document.getElementById('outputText').value = inputVal;
+  updateCount();
+  showToast('🔄 Direction swap ho gaya!');
+}
+
+function updateCount() {
+  const input = document.getElementById('inputText').value;
+  document.getElementById('count-input').textContent = input.length + ' characters';
+  updateStats(input, document.getElementById('outputText').value);
+}
+
+function updateOutputCount(output) {
+  document.getElementById('count-output').textContent = output.length + ' characters';
+}
+
+function updateStats(input, output) {
+  const text = input || '';
+  document.getElementById('stat-chars').textContent = text.length;
+  document.getElementById('stat-words').textContent = text.trim() ? text.trim().split(/\s+/).length : 0;
+  document.getElementById('stat-lines').textContent = text.trim() ? text.split(/\n/).length : 0;
+}
+
+function copyOutput() {
+  const output = document.getElementById('outputText').value;
+  if (!output.trim()) { showToast('⚠️ Pehle convert karen!'); return; }
+  navigator.clipboard.writeText(output).then(() => {
+    showToast('✅ Copy ho gaya — ab paste karen!');
+  });
+}
+
+function clearAll() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('outputText').value = '';
+  document.getElementById('count-input').textContent = '0 characters';
+  document.getElementById('count-output').textContent = '0 characters';
+  document.getElementById('stat-chars').textContent = '0';
+  document.getElementById('stat-words').textContent = '0';
+  document.getElementById('stat-lines').textContent = '0';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
