@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Free Plagiarism Checker Tool — ToolifyPro</title>
+<meta name="description" content="Free plagiarism checker tool. Compare two texts and check similarity percentage instantly. No signup required."/>
+<meta name="keywords" content="plagiarism checker, free plagiarism tool, text similarity checker, content checker, ToolifyPro"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ===== BASE ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:#0f0f1a; color:#e0e0e0; min-height:100vh; }
+
+/* ===== HEADER ===== */
+header { background:#1a1a2e; border-bottom:1px solid #2a2a4a; padding:0 24px; position:sticky; top:0; z-index:100; }
+.header-inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.logo { font-size:20px; font-weight:700; color:#ee0979; text-decoration:none; }
+.logo span { color:#fff; }
+.nav-link { font-size:13px; color:#888; text-decoration:none; padding:6px 14px; border-radius:20px; background:#2a2a4a; transition:all 0.2s; }
+.nav-link:hover { background:#ee0979; color:#fff; }
+
+/* ===== HERO ===== */
+.hero { background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#1a0a2e 100%); padding:44px 24px 36px; text-align:center; border-bottom:1px solid #2a2a4a; }
+.hero-badge { display:inline-block; background:rgba(238,9,121,0.15); border:1px solid rgba(238,9,121,0.3); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; color:#ee0979; margin-bottom:14px; }
+.hero h1 { font-size:clamp(22px,5vw,36px); font-weight:700; background:linear-gradient(135deg,#ff6a00,#ee0979); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px; }
+.hero-urdu { font-size:16px; color:#888; margin-bottom:8px; direction:rtl; }
+.hero p { font-size:14px; color:#888; max-width:500px; margin:0 auto; }
+
+/* ===== MAIN ===== */
+main { max-width:900px; margin:0 auto; padding:32px 16px 60px; }
+
+/* ===== TOOL ===== */
+.pc-wrap { background:#1a1a2e; border-radius:16px; padding:28px 24px; margin-bottom:24px; border:1px solid #2a2a4a; }
+.pc-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+@media(max-width:600px){ .pc-grid{ grid-template-columns:1fr; } }
+
+.pc-label { display:block; font-size:11px; color:#888; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.pc-textarea { width:100%; height:220px; background:#0f0f1a; border:1px solid #2a2a4a; border-radius:10px; color:#e0e0e0; font-family:'Poppins',sans-serif; font-size:13px; padding:12px; resize:vertical; outline:none; line-height:1.6; transition:border 0.3s; }
+.pc-textarea:focus { border-color:#ee0979; }
+.pc-textarea::placeholder { color:#444; }
+
+.pc-btns { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:14px; }
+.pc-btn { padding:11px 28px; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.3s; font-family:'Poppins',sans-serif; }
+.pc-btn-1 { background:linear-gradient(135deg,#ff6a00,#ee0979); color:#fff; }
+.pc-btn-2 { background:#2a2a4a; color:#ccc; border:1px solid #3a3a5a; }
+.pc-btn:hover { transform:translateY(-2px); opacity:0.9; }
+
+/* ===== RESULT ===== */
+.pc-result { display:none; margin-top:16px; background:#0f0f1a; border-radius:12px; padding:24px; border:1px solid #2a2a4a; text-align:center; }
+.pc-result.show { display:block; }
+
+.pc-meter { width:160px; height:160px; margin:0 auto 16px; position:relative; border-radius:50%; display:flex; align-items:center; justify-content:center; background:conic-gradient(#38ef7d 0%,#2a2a4a 0%); transition:background 1s ease; }
+.pc-meter-inner { width:130px; height:130px; background:#0f0f1a; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.pc-percent { font-size:2rem; font-weight:700; color:#fff; }
+.pc-percent-label { font-size:10px; color:#888; text-transform:uppercase; letter-spacing:1px; }
+.pc-verdict { font-size:1.1rem; font-weight:600; margin-bottom:12px; }
+
+.pc-info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-top:14px; }
+.pc-info-card { background:#1a1a2e; border-radius:8px; padding:12px; border:1px solid #2a2a4a; }
+.pc-info-card-label { font-size:11px; color:#888; margin-bottom:4px; }
+.pc-info-card-value { font-size:1.1rem; font-weight:700; color:#ee0979; }
+
+.pc-matches { margin-top:16px; text-align:left; background:#1a1a2e; border-radius:8px; padding:14px; border:1px solid #2a2a4a; max-height:200px; overflow-y:auto; }
+.pc-matches-title { font-size:12px; color:#ee0979; font-weight:600; margin-bottom:10px; }
+.pc-match-item { background:rgba(238,9,121,0.1); border-left:3px solid #ee0979; padding:8px 10px; margin-bottom:6px; border-radius:4px; font-size:12px; color:#ccc; }
+
+/* ===== HOW TO USE ===== */
+.info-card { background:#1a1a2e; border-radius:16px; padding:24px; margin-bottom:20px; border:1px solid #2a2a4a; }
+.info-title { font-size:16px; font-weight:700; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.steps { display:grid; gap:12px; }
+.step { display:flex; gap:14px; align-items:flex-start; }
+.step-num { width:28px; height:28px; background:linear-gradient(135deg,#ff6a00,#ee0979); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0; }
+.step-text { font-size:13px; color:#aaa; line-height:1.6; padding-top:3px; }
+.step-text strong { color:#fff; }
+
+.why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:4px; }
+.why-item { background:#0f0f1a; border-radius:10px; padding:14px 16px; border:1px solid #2a2a4a; display:flex; align-items:flex-start; gap:10px; }
+.why-icon { font-size:20px; flex-shrink:0; }
+.why-text { font-size:13px; color:#aaa; line-height:1.5; }
+.why-text strong { color:#fff; display:block; margin-bottom:2px; }
+
+/* ===== BUTTON PANEL ===== */
+.btn-panel { text-align:center; margin:32px 0; }
+.btn-panel a { background:linear-gradient(135deg,#ff6a00,#ee0979); border-radius:10px; color:white; display:inline-block; font-size:15px; font-weight:700; padding:14px 32px; text-decoration:none; transition:all 0.3s; box-shadow:0 4px 15px rgba(238,9,121,0.3); }
+.btn-panel a:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(238,9,121,0.4); }
+
+/* ===== FOOTER ===== */
+footer { background:#1a1a2e; border-top:1px solid #2a2a4a; text-align:center; padding:24px; font-size:13px; color:#666; }
+footer a { color:#ee0979; text-decoration:none; }
+
+/* ===== TOAST ===== */
+.pc-toast { position:fixed; bottom:30px; right:30px; padding:12px 22px; border-radius:10px; font-weight:600; font-size:13px; opacity:0; transform:translateY(20px); transition:all 0.4s; z-index:9999; pointer-events:none; }
+.pc-toast.show { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="https://toolifyproonline.github.io/toolifyProonline/" class="logo">🚀 Toolify<span>Pro</span></a>
+    <a href="https://toolifyproonline.github.io/toolifyProonline/" class="nav-link">← All Tools</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🔍 Free Plagiarism Tool — No Signup Required</div>
+  <h1>Plagiarism Checker</h1>
+  <p class="hero-urdu">دو متن کا موازنہ کریں — مماثلت فیصد چیک کریں</p>
+  <p>Do texts compare karein aur similarity percentage check karein — bilkul free!</p>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- TOOL -->
+  <div class="pc-wrap">
+    <div class="pc-grid">
+      <div>
+        <label class="pc-label">📝 Text 1 — Original</label>
+        <textarea class="pc-textarea" id="pc-text1" placeholder="Pehla text yahan paste karein..."></textarea>
+      </div>
+      <div>
+        <label class="pc-label">📝 Text 2 — Compare</label>
+        <textarea class="pc-textarea" id="pc-text2" placeholder="Doosra text yahan paste karein..."></textarea>
+      </div>
+    </div>
+
+    <div class="pc-btns">
+      <button class="pc-btn pc-btn-1" onclick="pcCheck()">🔍 Check Plagiarism</button>
+      <button class="pc-btn pc-btn-2" onclick="pcClear()">🗑️ Clear All</button>
+    </div>
+
+    <div class="pc-result" id="pc-result">
+      <div class="pc-meter" id="pc-meter">
+        <div class="pc-meter-inner">
+          <div class="pc-percent" id="pc-percent">0%</div>
+          <div class="pc-percent-label">Similarity</div>
+        </div>
+      </div>
+      <div class="pc-verdict" id="pc-verdict">—</div>
+      <div class="pc-info-grid">
+        <div class="pc-info-card"><div class="pc-info-card-label">Total Words</div><div class="pc-info-card-value" id="pc-total">0</div></div>
+        <div class="pc-info-card"><div class="pc-info-card-label">Matched Words</div><div class="pc-info-card-value" id="pc-matched">0</div></div>
+        <div class="pc-info-card"><div class="pc-info-card-label">Unique Words</div><div class="pc-info-card-value" id="pc-unique">0</div></div>
+        <div class="pc-info-card"><div class="pc-info-card-label">Sentences Match</div><div class="pc-info-card-value" id="pc-sentences">0</div></div>
+      </div>
+      <div class="pc-matches" id="pc-matches" style="display:none;">
+        <div class="pc-matches-title">⚠️ Matching Sentences:</div>
+        <div id="pc-match-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="info-card">
+    <div class="info-title">📖 How to Use — Istemal Ka Tarika</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Text 1 box mein original text paste karein</strong> — jo aapne khud likha hay</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Text 2 box mein compare wala text paste karein</strong> — jis se match check karna hay</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>"Check Plagiarism" button click karein</strong> — result foran aa jayega</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Similarity percentage dekhen</strong> — 20% se kam = unique, zyada = copied content</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY USE -->
+  <div class="info-card">
+    <div class="info-title">💡 Why Use This Tool — Kyun Istemal Karen</div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">✅</div>
+        <div class="why-text"><strong>Content Uniqueness Check</strong>Apna blog ya article publish karne se pehle check karen</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🎓</div>
+        <div class="why-text"><strong>Students ke liye</strong>Assignment ya paper submit karne se pehle verify karen</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🚀</div>
+        <div class="why-text"><strong>SEO Improve Karen</strong>Unique content Google ranking ke liye zaroori hay</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">⚡</div>
+        <div class="why-text"><strong>Instant Result</strong>Koi wait nahi — foran similarity percentage milti hay</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUTTON PANEL -->
+  <div class="btn-panel">
+    <a href="https://toolifyproonline.github.io/toolifyProonline/">🔧 Explore All Free Tools</a>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>🚀 <a href="https://toolifyproonline.github.io/toolifyProonline/">ToolifyPro Online</a> — Free Tools, No Signup Required</p>
+</footer>
+
+<!-- TOAST -->
+<div class="pc-toast" id="pc-toast"></div>
+
+<script>
+function pcCheck() {
+  var t1 = document.getElementById('pc-text1').value.trim();
+  var t2 = document.getElementById('pc-text2').value.trim();
+  if (!t1 || !t2) { pcToast('⚠️ Dono texts paste karein!', '#ff416c'); return; }
+
+  var clean1 = t1.toLowerCase().replace(/[^\w\s.]/g, '');
+  var clean2 = t2.toLowerCase().replace(/[^\w\s.]/g, '');
+  var words1 = clean1.split(/\s+/).filter(function(w){ return w.length > 2; });
+  var words2 = clean2.split(/\s+/).filter(function(w){ return w.length > 2; });
+
+  var matched = 0;
+  words1.forEach(function(w) { if (words2.indexOf(w) !== -1) matched++; });
+
+  var totalUnique = Math.max(words1.length, words2.length);
+  var percent = totalUnique > 0 ? Math.round((matched / totalUnique) * 100) : 0;
+
+  var sentences1 = t1.split(/[.!?]+/).map(function(s){ return s.trim().toLowerCase(); }).filter(function(s){ return s.length > 10; });
+  var sentences2 = t2.split(/[.!?]+/).map(function(s){ return s.trim().toLowerCase(); }).filter(function(s){ return s.length > 10; });
+  var matchedSentences = [];
+  sentences1.forEach(function(s1) {
+    sentences2.forEach(function(s2) {
+      if (pcSimilarity(s1, s2) > 70 && matchedSentences.indexOf(s1) === -1) matchedSentences.push(s1);
+    });
+  });
+
+  document.getElementById('pc-percent').textContent = percent + '%';
+  document.getElementById('pc-total').textContent = totalUnique;
+  document.getElementById('pc-matched').textContent = matched;
+  document.getElementById('pc-unique').textContent = totalUnique - matched;
+  document.getElementById('pc-sentences').textContent = matchedSentences.length;
+
+  var color = percent > 70 ? '#ff416c' : percent > 40 ? '#ffd200' : '#38ef7d';
+  document.getElementById('pc-meter').style.background = 'conic-gradient(' + color + ' ' + percent + '%, #2a2a4a ' + percent + '%)';
+
+  var verdict = document.getElementById('pc-verdict');
+  if (percent < 20) { verdict.textContent = '✅ Unique Content — Bilkul theek hai!'; verdict.style.color = '#38ef7d'; }
+  else if (percent < 50) { verdict.textContent = '⚠️ Some Similarity — Thoda match hai'; verdict.style.color = '#ffd200'; }
+  else if (percent < 75) { verdict.textContent = '🚨 High Similarity — Bohat match hai!'; verdict.style.color = '#ff9800'; }
+  else { verdict.textContent = '❌ Plagiarized — Copy content hai!'; verdict.style.color = '#ff416c'; }
+
+  var matchBox = document.getElementById('pc-matches');
+  var matchList = document.getElementById('pc-match-list');
+  if (matchedSentences.length > 0) {
+    matchBox.style.display = 'block';
+    matchList.innerHTML = '';
+    matchedSentences.forEach(function(s) {
+      var div = document.createElement('div');
+      div.className = 'pc-match-item';
+      div.textContent = '"' + s.substring(0, 100) + (s.length > 100 ? '...' : '') + '"';
+      matchList.appendChild(div);
+    });
+  } else { matchBox.style.display = 'none'; }
+
+  document.getElementById('pc-result').classList.add('show');
+  pcToast('✅ Check Complete! ' + percent + '% Similarity', color);
+}
+
+function pcSimilarity(s1, s2) {
+  var w1 = s1.split(/\s+/);
+  var w2 = s2.split(/\s+/);
+  var matches = 0;
+  w1.forEach(function(w){ if (w2.indexOf(w) !== -1) matches++; });
+  return Math.round((matches / Math.max(w1.length, w2.length)) * 100);
+}
+
+function pcClear() {
+  document.getElementById('pc-text1').value = '';
+  document.getElementById('pc-text2').value = '';
+  document.getElementById('pc-result').classList.remove('show');
+  pcToast('🗑️ Clear Ho Gaya!', '#ff416c');
+}
+
+function pcToast(msg, color) {
+  var t = document.getElementById('pc-toast');
+  t.textContent = msg;
+  t.style.background = color;
+  t.style.color = (color === '#38ef7d' || color === '#ffd200') ? '#000' : '#fff';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+</script>
+</body>
+</html>
