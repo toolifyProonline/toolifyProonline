@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Free YouTube Title Generator Tool — ToolifyPro</title>
+<meta name="description" content="Free YouTube title generator. Create viral, click-worthy titles for your videos instantly. No signup required."/>
+<meta name="keywords" content="YouTube title generator, viral title, free title tool, YouTube SEO title, ToolifyPro"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --primary: #dc2626;
+    --primary-light: #fef2f2;
+    --primary-dark: #b91c1c;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --white: #ffffff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Poppins',sans-serif; background:var(--gray-50); color:var(--gray-800); min-height:100vh; }
+
+  header { background:var(--white); border-bottom:1px solid var(--gray-200); padding:0 24px; position:sticky; top:0; z-index:100; box-shadow:var(--shadow); }
+  .header-inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .logo { font-size:20px; font-weight:700; color:var(--primary); text-decoration:none; }
+  .logo span { color:var(--gray-800); }
+  .nav-link { font-size:13px; color:var(--gray-600); text-decoration:none; padding:6px 14px; border-radius:20px; background:var(--gray-100); transition:all 0.2s; }
+  .nav-link:hover { background:var(--primary-light); color:var(--primary); }
+
+  .hero { background:linear-gradient(135deg, #7f1d1d 0%, #dc2626 50%, #ef4444 100%); padding:48px 24px 40px; text-align:center; color:white; }
+  .hero-badge { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:500; margin-bottom:16px; }
+  .hero h1 { font-size:clamp(22px,5vw,36px); font-weight:700; line-height:1.3; margin-bottom:10px; }
+  .hero-urdu { font-family:'Noto Nastaliq Urdu',serif; font-size:18px; opacity:0.9; margin-bottom:10px; direction:rtl; }
+  .hero p { font-size:14px; opacity:0.85; max-width:500px; margin:0 auto; }
+
+  main { max-width:900px; margin:0 auto; padding:32px 16px 60px; }
+
+  .tool-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow-lg); padding:28px 24px; margin-bottom:24px; }
+  .input-label { font-size:14px; font-weight:600; color:var(--gray-800); margin-bottom:8px; display:block; }
+  .input-label-urdu { font-family:'Noto Nastaliq Urdu',serif; font-size:13px; color:var(--gray-600); direction:rtl; display:block; margin-bottom:10px; }
+
+  .input-row { display:flex; gap:10px; flex-wrap:wrap; }
+  .main-input { flex:1; min-width:200px; padding:13px 18px; border:2px solid var(--gray-200); border-radius:var(--radius-sm); font-size:15px; font-family:'Poppins',sans-serif; outline:none; transition:all 0.2s; background:var(--gray-50); }
+  .main-input:focus { border-color:var(--primary); background:var(--white); box-shadow:0 0 0 3px rgba(220,38,38,0.1); }
+  .main-input::placeholder { color:var(--gray-400); }
+
+  .btn-generate { padding:13px 28px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-size:15px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; white-space:nowrap; display:flex; align-items:center; gap:8px; }
+  .btn-generate:hover { background:var(--primary-dark); transform:translateY(-1px); }
+  .btn-generate:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+  .style-filters { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+  .style-btn { padding:7px 14px; border:1.5px solid var(--gray-200); border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; background:var(--white); color:var(--gray-600); transition:all 0.2s; font-family:'Poppins',sans-serif; }
+  .style-btn.active, .style-btn:hover { border-color:var(--primary); background:var(--primary-light); color:var(--primary); }
+
+  .loading { display:none; text-align:center; padding:40px; }
+  .loading.show { display:block; }
+  .spinner { width:40px; height:40px; border:3px solid var(--gray-200); border-top-color:var(--primary); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 16px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  .results-section { display:none; }
+  .results-section.show { display:block; }
+
+  .results-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px; }
+  .results-title { font-size:16px; font-weight:600; }
+  .results-count { font-size:12px; color:var(--gray-600); background:var(--gray-100); padding:4px 10px; border-radius:12px; }
+  .btn-regenerate { padding:8px 16px; background:var(--primary); color:white; border:none; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+  .btn-regenerate:hover { background:var(--primary-dark); }
+
+  /* TITLE CARDS */
+  .titles-list { display:grid; gap:12px; }
+  .title-item { background:var(--white); border:1.5px solid var(--gray-200); border-radius:var(--radius-sm); padding:16px 18px; display:flex; align-items:flex-start; justify-content:space-between; gap:12px; transition:all 0.2s; animation:slideIn 0.3s ease both; cursor:pointer; }
+  .title-item:hover { border-color:var(--primary); box-shadow:var(--shadow-md); transform:translateX(3px); }
+  @keyframes slideIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .title-left { flex:1; }
+  .title-number { font-size:10px; font-weight:700; color:var(--gray-400); margin-bottom:4px; text-transform:uppercase; letter-spacing:1px; }
+  .title-text { font-size:15px; font-weight:600; color:var(--gray-800); line-height:1.5; margin-bottom:8px; }
+  .title-meta { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+
+  .badge { font-size:11px; font-weight:600; padding:2px 8px; border-radius:10px; }
+  .badge-style { background:var(--primary-light); color:var(--primary); }
+  .badge-length { background:var(--gray-100); color:var(--gray-600); }
+  .badge-good { background:var(--green-light); color:var(--green); }
+  .badge-warn { background:#fff7ed; color:#c2410c; }
+
+  .char-bar { flex:1; min-width:80px; height:4px; background:var(--gray-200); border-radius:2px; overflow:hidden; }
+  .char-fill { height:100%; border-radius:2px; transition:width 0.5s ease; }
+  .char-fill.good { background:var(--green); }
+  .char-fill.warn { background:#f59e0b; }
+  .char-fill.bad { background:var(--primary); }
+
+  .btn-copy-title { padding:7px 14px; background:var(--gray-100); border:1px solid var(--gray-200); border-radius:6px; font-size:11px; font-weight:600; cursor:pointer; color:var(--gray-600); transition:all 0.2s; font-family:'Poppins',sans-serif; white-space:nowrap; flex-shrink:0; }
+  .btn-copy-title:hover { background:var(--primary-light); color:var(--primary); border-color:var(--primary); }
+  .btn-copy-title.copied { background:var(--green-light); color:var(--green); border-color:var(--green); }
+
+  .tips-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-top:24px; border-left:4px solid var(--primary); }
+  .tips-title { font-size:15px; font-weight:600; margin-bottom:14px; }
+  .tip-item { display:flex; gap:10px; margin-bottom:10px; font-size:13px; color:var(--gray-600); }
+  .tip-urdu { font-family:'Noto Nastaliq Urdu',serif; direction:rtl; font-size:13px; color:var(--gray-600); line-height:1.8; margin-top:8px; }
+
+  .empty-state { text-align:center; padding:48px 24px; color:var(--gray-400); }
+  .empty-icon { font-size:48px; margin-bottom:12px; }
+  .empty-urdu { font-family:'Noto Nastaliq Urdu',serif; direction:rtl; font-size:13px; margin-top:6px; }
+
+  footer { background:var(--gray-800); color:var(--gray-400); text-align:center; padding:24px; font-size:13px; }
+  footer a { color:#f87171; text-decoration:none; }
+  footer .footer-urdu { font-family:'Noto Nastaliq Urdu',serif; direction:rtl; font-size:13px; margin-top:6px; }
+
+  .toast { position:fixed; bottom:24px; right:24px; background:var(--gray-800); color:white; padding:12px 20px; border-radius:var(--radius-sm); font-size:13px; font-weight:500; opacity:0; transform:translateY(10px); transition:all 0.3s; z-index:999; pointer-events:none; }
+  .toast.show { opacity:1; transform:translateY(0); }
+
+  @media(max-width:600px) { .input-row { flex-direction:column; } .btn-generate { justify-content:center; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="https://toolifyproonline.github.io/toolifyProonline/" class="logo">🚀 Toolify<span>Pro</span></a>
+    <a href="https://toolifyproonline.github.io/toolifyProonline/" class="nav-link">← All Tools</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">🎬 Free YouTube Tool — No Signup Required</div>
+  <h1>YouTube Title Generator</h1>
+  <p class="hero-urdu">وائرل اور کلک ورتھی یوٹیوب ٹائٹلز فوری بنائیں</p>
+  <p>Generate viral, click-worthy YouTube titles that get more views — instantly free!</p>
+</div>
+
+<main>
+  <div class="tool-card">
+    <label class="input-label">🎬 Enter Your Video Topic / Apna Topic Likhen</label>
+    <span class="input-label-urdu">مثال: گاجر کا جوس، یوٹیوب ایس ای او، پاکستانی کھانا</span>
+    <div class="input-row">
+      <input class="main-input" id="topicInput" type="text" placeholder="e.g. gajar ka juice, YouTube SEO, Pakistani recipe..." maxlength="100"/>
+      <button class="btn-generate" id="generateBtn" onclick="generateTitles()">
+        <span>▶</span> Generate Titles
+      </button>
+    </div>
+    <div class="style-filters">
+      <span style="font-size:12px;color:var(--gray-600);padding-top:7px;font-weight:500;">Style:</span>
+      <button class="style-btn active" onclick="filterStyle('all',this)">All</button>
+      <button class="style-btn" onclick="filterStyle('viral',this)">🔥 Viral</button>
+      <button class="style-btn" onclick="filterStyle('howto',this)">📖 How To</button>
+      <button class="style-btn" onclick="filterStyle('list',this)">📋 List</button>
+      <button class="style-btn" onclick="filterStyle('question',this)">❓ Question</button>
+      <button class="style-btn" onclick="filterStyle('urdu',this)">🇵🇰 Urdu Mix</button>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Viral titles generate ho rahe hain... 🎬</p>
+  </div>
+
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">🎬</div>
+    <p>Apna topic likhen aur <strong>Generate Titles</strong> click karen</p>
+    <p class="empty-urdu">موضوع لکھیں اور وائرل ٹائٹلز بنائیں</p>
+  </div>
+
+  <div class="results-section" id="resultsSection">
+    <div class="tool-card">
+      <div class="results-header">
+        <div>
+          <div class="results-title">Titles for: "<span id="topicDisplay"></span>"</div>
+          <div class="results-count" id="resultsCount">0 titles</div>
+        </div>
+        <button class="btn-regenerate" onclick="generateTitles()">🔄 Regenerate</button>
+      </div>
+      <div class="titles-list" id="titlesList"></div>
+    </div>
+  </div>
+
+  <div class="tips-card">
+    <div class="tips-title">💡 Title Tips — Zyada Views Ka Secret</div>
+    <div class="tip-item"><span>🎯</span><span style="margin-left:8px">Title <strong>50-60 characters</strong> ka rakhen — search mein poora nazar aye</span></div>
+    <div class="tip-item"><span>🔑</span><span style="margin-left:8px">Main keyword title ke <strong>shuru mein</strong> rakhen</span></div>
+    <div class="tip-item"><span>❓</span><span style="margin-left:8px"><strong>Question titles</strong> highest CTR dete hain — "Kya aap jaante hain..."</span></div>
+    <div class="tip-item"><span>🔢</span><span style="margin-left:8px"><strong>Numbers</strong> use karen — "5 tarike", "3 secrets" — trust badhta hay</span></div>
+    <p class="tip-urdu">ٹائٹل میں مین کیورڈ شروع میں رکھیں — یوٹیوب الگورتھم پسند کرتا ہے</p>
+  </div>
+</main>
+
+<footer>
+  <p>🚀 <a href="https://toolifyproonline.github.io/toolifyProonline/">ToolifyPro Online</a> — Free Tools, No Signup Required</p>
+  <p class="footer-urdu">مفت ٹولز — بغیر سائن اپ کے</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const titleTemplates = {
+    viral: [
+      "You Won't Believe This {t} Trick!",
+      "{t} — The Secret No One Tells You",
+      "I Tried {t} for 30 Days — Here's What Happened",
+      "This {t} Method Changed Everything",
+      "Stop Doing {t} Wrong — Watch This First",
+      "{t} — Before and After Results",
+    ],
+    howto: [
+      "How to {t} Step by Step (Complete Guide)",
+      "How to {t} for Beginners — Easy Method",
+      "How to Do {t} at Home for Free",
+      "Learn {t} in Just 10 Minutes",
+      "How to {t} Like a Pro in 2025",
+    ],
+    list: [
+      "5 Best {t} Tips You Must Know",
+      "Top 7 {t} Tricks for Beginners",
+      "3 {t} Secrets That Actually Work",
+      "10 Things About {t} Nobody Talks About",
+      "7 Biggest {t} Mistakes to Avoid",
+    ],
+    question: [
+      "Is {t} Really Worth It?",
+      "Can {t} Really Change Your Life?",
+      "Why Is {t} So Popular Right Now?",
+      "What Happens If You Try {t} Daily?",
+      "Does {t} Actually Work? Honest Review",
+    ],
+    urdu: [
+      "{t} — Ye Koi Nahi Batata!",
+      "{t} Ka Asan Tarika — Bilkul Free",
+      "Kya Aap Jaante Hain {t} Ke Fayde?",
+      "{t} — Aazmayen Aur Farq Dekhen",
+      "{t} Sahi Tarike Se Kaise Karen",
+      "Maine {t} Try Kia — Bohat Hairan Hua!",
+    ]
+  };
+
+  let allTitles = [];
+  let currentStyle = 'all';
+
+  function generateTitles() {
+    const topic = document.getElementById('topicInput').value.trim();
+    if (!topic) { showToast('⚠️ Pehle topic likhen!'); document.getElementById('topicInput').focus(); return; }
+
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('resultsSection').classList.remove('show');
+    document.getElementById('loading').classList.add('show');
+    document.getElementById('generateBtn').disabled = true;
+
+    setTimeout(() => {
+      allTitles = buildTitles(topic);
+      document.getElementById('loading').classList.remove('show');
+      document.getElementById('generateBtn').disabled = false;
+      document.getElementById('topicDisplay').textContent = topic;
+      renderTitles(allTitles);
+      document.getElementById('resultsSection').classList.add('show');
+    }, 1000);
+  }
+
+  function buildTitles(topic) {
+    const t = topic.charAt(0).toUpperCase() + topic.slice(1);
+    let result = [];
+    Object.entries(titleTemplates).forEach(([style, templates]) => {
+      templates.forEach(tmpl => {
+        result.push({ text: tmpl.replace(/{t}/g, t), style });
+      });
+    });
+    return result;
+  }
+
+  function renderTitles(titles) {
+    const list = document.getElementById('titlesList');
+    list.innerHTML = '';
+    const filtered = currentStyle === 'all' ? titles : titles.filter(t => t.style === currentStyle);
+    document.getElementById('resultsCount').textContent = filtered.length + ' titles';
+
+    filtered.forEach((title, i) => {
+      const len = title.text.length;
+      const pct = Math.min((len / 70) * 100, 100);
+      const lenClass = len <= 60 ? 'good' : len <= 70 ? 'warn' : 'bad';
+      const lenBadge = len <= 60 ? 'badge-good' : 'badge-warn';
+      const lenText = len <= 60 ? '✅ Perfect Length' : len <= 70 ? '⚠️ A bit long' : '❌ Too long';
+      const styleLabel = {viral:'🔥 Viral', howto:'📖 How To', list:'📋 List', question:'❓ Question', urdu:'🇵🇰 Urdu Mix'}[title.style];
+
+      const div = document.createElement('div');
+      div.className = 'title-item';
+      div.style.animationDelay = (i * 0.04) + 's';
+      div.innerHTML = `
+        <div class="title-left">
+          <div class="title-number">Title ${i+1}</div>
+          <div class="title-text">${title.text}</div>
+          <div class="title-meta">
+            <span class="badge badge-style">${styleLabel}</span>
+            <span class="badge badge-length">${len} chars</span>
+            <span class="badge ${lenBadge}">${lenText}</span>
+            <div class="char-bar"><div class="char-fill ${lenClass}" style="width:${pct}%"></div></div>
+          </div>
+        </div>
+        <button class="btn-copy-title" onclick="copyTitle(this,'${title.text.replace(/'/g,"\\'")}')">Copy</button>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function filterStyle(style, btn) {
+    currentStyle = style;
+    document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (allTitles.length) renderTitles(allTitles);
+  }
+
+  function copyTitle(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  document.getElementById('topicInput').addEventListener('keypress', e => { if(e.key==='Enter') generateTitles(); });
+</script>
+</body>
+</html>
