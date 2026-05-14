@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Urdu Font Changer — Free Urdu Tool | ToolifyPro</title>
+<meta name="description" content="Free Urdu Font Changer. See your Urdu text in Noori Nastaliq, Jameel Noori, Faiz Lahori and more fonts instantly. No signup required."/>
+<meta name="keywords" content="urdu font changer, noori nastaliq, jameel noori, urdu fonts, urdu text, ToolifyPro"/>
+
+<!-- Google Fonts - Urdu Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:#faf5ff; color:#1a1a2e; min-height:100vh; }
+
+/* HEADER */
+header { background:#fff; border-bottom:1px solid #e5e7eb; padding:0 24px; position:sticky; top:0; z-index:100; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.header-inner { max-width:1000px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.logo { font-size:20px; font-weight:700; color:#7c3aed; text-decoration:none; font-family:'Poppins',sans-serif; }
+.logo span { color:#1f2937; }
+.nav-link { font-size:13px; color:#4b5563; text-decoration:none; padding:6px 14px; border-radius:20px; background:#f3f4f6; transition:all 0.2s; font-family:'Poppins',sans-serif; }
+.nav-link:hover { background:#ede9fe; color:#7c3aed; }
+
+/* HERO */
+.hero { background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 50%,#a855f7 100%); padding:44px 24px 36px; text-align:center; color:white; }
+.hero-badge { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; margin-bottom:14px; font-family:'Poppins',sans-serif; }
+.hero h1 { font-size:clamp(22px,5vw,36px); font-weight:700; margin-bottom:8px; font-family:'Poppins',sans-serif; }
+.hero-urdu { font-family:'Noto Nastaliq Urdu',serif; font-size:20px; opacity:0.9; margin-bottom:8px; direction:rtl; }
+.hero p { font-size:14px; opacity:0.85; max-width:500px; margin:0 auto; font-family:'Poppins',sans-serif; }
+
+/* MAIN */
+main { max-width:1000px; margin:0 auto; padding:32px 16px 60px; }
+
+/* INPUT CARD */
+.input-card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:28px 24px; margin-bottom:24px; border:1.5px solid #e5e7eb; }
+.input-label { font-size:13px; font-weight:700; color:#4b5563; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; font-family:'Poppins',sans-serif; }
+.char-info { font-size:12px; color:#9ca3af; font-weight:400; text-transform:none; letter-spacing:0; }
+
+.urdu-input { width:100%; height:160px; padding:16px 20px; border:1.5px solid #e5e7eb; border-radius:12px; font-family:'Noto Nastaliq Urdu',serif; font-size:20px; line-height:2; direction:rtl; text-align:right; outline:none; resize:vertical; transition:border 0.2s; background:#fafafa; color:#1f2937; }
+.urdu-input:focus { border-color:#7c3aed; background:#fff; box-shadow:0 0 0 3px rgba(124,58,237,0.1); }
+.urdu-input::placeholder { color:#d1d5db; }
+
+.input-btns { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+.btn { padding:9px 20px; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; display:flex; align-items:center; gap:6px; }
+.btn-sample { background:#ede9fe; color:#7c3aed; }
+.btn-sample:hover { background:#ddd6fe; }
+.btn-clear { background:#f3f4f6; color:#4b5563; }
+.btn-clear:hover { background:#e5e7eb; }
+.btn-copy-all { background:#7c3aed; color:white; }
+.btn-copy-all:hover { background:#6d28d9; }
+
+/* FONT SIZE CONTROL */
+.size-control { display:flex; align-items:center; gap:12px; margin-top:14px; flex-wrap:wrap; }
+.size-label { font-size:13px; font-weight:600; color:#4b5563; font-family:'Poppins',sans-serif; }
+.size-slider { flex:1; min-width:150px; max-width:250px; accent-color:#7c3aed; }
+.size-value { font-size:13px; font-weight:700; color:#7c3aed; min-width:40px; font-family:'Poppins',sans-serif; }
+
+/* FONTS GRID */
+.section-title { font-size:18px; font-weight:700; margin-bottom:6px; font-family:'Poppins',sans-serif; }
+.section-sub { font-size:13px; color:#4b5563; margin-bottom:20px; font-family:'Poppins',sans-serif; }
+
+.fonts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-bottom:32px; }
+
+.font-card { background:#fff; border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,0.06); border:2px solid #e5e7eb; overflow:hidden; transition:all 0.25s; }
+.font-card:hover { border-color:#7c3aed; box-shadow:0 4px 20px rgba(124,58,237,0.15); transform:translateY(-2px); }
+
+.font-card-header { padding:12px 16px; background:#fafafa; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between; }
+.font-name { font-size:13px; font-weight:700; color:#1f2937; font-family:'Poppins',sans-serif; }
+.font-badge { font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; font-family:'Poppins',sans-serif; }
+.badge-popular { background:#ede9fe; color:#7c3aed; }
+.badge-classic { background:#fef3c7; color:#d97706; }
+.badge-modern { background:#dbeafe; color:#2563eb; }
+.badge-bold { background:#fee2e2; color:#dc2626; }
+.badge-calligraphy { background:#d1fae5; color:#059669; }
+
+.font-preview { padding:20px 18px; min-height:100px; direction:rtl; text-align:right; line-height:2.2; color:#1f2937; word-break:break-word; }
+
+.font-card-footer { padding:10px 16px; border-top:1px solid #f3f4f6; display:flex; gap:8px; }
+.btn-copy-font { flex:1; padding:8px; background:#ede9fe; color:#7c3aed; border:none; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.btn-copy-font:hover { background:#7c3aed; color:white; }
+.btn-copy-font.copied { background:#16a34a; color:white; }
+.btn-fullscreen { padding:8px 12px; background:#f3f4f6; color:#4b5563; border:none; border-radius:6px; font-size:12px; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.btn-fullscreen:hover { background:#e5e7eb; }
+
+/* MODAL */
+.modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; padding:20px; }
+.modal-overlay.show { display:flex; }
+.modal { background:#fff; border-radius:16px; max-width:700px; width:100%; max-height:80vh; overflow-y:auto; }
+.modal-header { padding:20px 24px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between; }
+.modal-title { font-size:16px; font-weight:700; font-family:'Poppins',sans-serif; }
+.modal-close { font-size:20px; cursor:pointer; color:#4b5563; background:none; border:none; padding:4px 8px; border-radius:6px; }
+.modal-close:hover { background:#f3f4f6; }
+.modal-body { padding:28px 24px; direction:rtl; text-align:right; line-height:2.5; color:#1f2937; font-size:24px; word-break:break-word; }
+.modal-footer { padding:16px 24px; border-top:1px solid #e5e7eb; display:flex; gap:10px; justify-content:flex-end; }
+.btn-modal-copy { padding:10px 24px; background:#7c3aed; color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; }
+.btn-modal-close { padding:10px 24px; background:#f3f4f6; color:#4b5563; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; }
+
+/* INFO CARD */
+.info-card { background:#fff; border-radius:16px; padding:24px; margin-bottom:20px; border:1.5px solid #e5e7eb; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+.info-title { font-size:16px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; font-family:'Poppins',sans-serif; }
+.steps { display:grid; gap:12px; }
+.step { display:flex; gap:12px; align-items:flex-start; }
+.step-num { width:28px; height:28px; background:#7c3aed; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; font-family:'Poppins',sans-serif; }
+.step-text { font-size:13px; color:#4b5563; line-height:1.6; padding-top:4px; font-family:'Poppins',sans-serif; }
+.step-text strong { color:#1f2937; }
+
+/* BTN PANEL */
+.btn-panel { text-align:center; margin:24px 0; }
+.btn-panel a { background:linear-gradient(135deg,#7c3aed,#6d28d9); border-radius:10px; color:white; display:inline-block; font-size:15px; font-weight:700; padding:14px 32px; text-decoration:none; transition:all 0.3s; box-shadow:0 4px 15px rgba(124,58,237,0.3); font-family:'Poppins',sans-serif; }
+.btn-panel a:hover { transform:translateY(-2px); }
+
+/* TOAST */
+.toast { position:fixed; bottom:24px; right:24px; background:#1f2937; color:white; padding:12px 20px; border-radius:10px; font-size:13px; font-weight:600; opacity:0; transform:translateY(10px); transition:all 0.3s; z-index:9999; pointer-events:none; font-family:'Poppins',sans-serif; }
+.toast.show { opacity:1; transform:translateY(0); }
+
+/* FOOTER */
+footer { background:#1f2937; color:#9ca3af; text-align:center; padding:24px; font-size:13px; font-family:'Poppins',sans-serif; }
+footer a { color:#a78bfa; text-decoration:none; }
+
+@media(max-width:600px) {
+  .fonts-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="https://toolifyproonline.github.io/toolifyProonline/" class="logo">🚀 Toolify<span>Pro</span></a>
+    <a href="https://toolifyproonline.github.io/toolifyProonline/" class="nav-link">← All Tools</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">🔤 Free Urdu Font Tool — No Signup Required</div>
+  <h1>Urdu Font Changer</h1>
+  <p class="hero-urdu">اپنا اردو متن مختلف خوبصورت فونٹس میں دیکھیں</p>
+  <p>Apna Urdu text Noori Nastaliq, Jameel, Nafees aur doosre fonts mein dekhen — bilkul free!</p>
+</div>
+
+<main>
+
+  <!-- INPUT -->
+  <div class="input-card">
+    <div class="input-label">
+      <span>✍️ Apna Urdu Text Yahan Likhen</span>
+      <span class="char-info" id="charInfo">0 characters</span>
+    </div>
+    <textarea class="urdu-input" id="urduInput"
+      placeholder="یہاں اپنا اردو متن لکھیں یا پیسٹ کریں..."
+      oninput="updateFonts()"></textarea>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-top:14px;">
+      <div class="input-btns">
+        <button class="btn btn-sample" onclick="loadSample()">📝 Sample Text</button>
+        <button class="btn btn-clear" onclick="clearText()">🗑️ Clear</button>
+      </div>
+      <div class="size-control">
+        <span class="size-label">Font Size:</span>
+        <input type="range" class="size-slider" id="sizeSlider" min="16" max="40" value="22" oninput="updateSize()"/>
+        <span class="size-value" id="sizeVal">22px</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FONTS PREVIEW -->
+  <div class="section-title">🎨 Fonts Preview — Tamam Fonts Mein Dekhen</div>
+  <p class="section-sub">Neeche apna text har font mein nazar ayega — pasand ka font copy karen!</p>
+
+  <div class="fonts-grid" id="fontsGrid">
+
+    <!-- Font 1: Noto Nastaliq -->
+    <div class="font-card">
+      <div class="font-card-header">
+        <span class="font-name">Noto Nastaliq Urdu</span>
+        <span class="font-badge badge-popular">⭐ Popular</span>
+      </div>
+      <div class="font-preview" id="preview-noto"
+        style="font-family:'Noto Nastaliq Urdu',serif; font-size:22px;">
+        یہاں آپ کا متن نظر آئے گا
+      </div>
+      <div class="font-card-footer">
+        <button class="btn-copy-font" onclick="copyFont('preview-noto', this)">📋 Copy Text</button>
+        <button class="btn-fullscreen" onclick="openModal('preview-noto','Noto Nastaliq Urdu')">🔍 Full View</button>
+      </div>
+    </div>
+
+    <!-- Font 2: Noto Naskh -->
+    <div class="font-card">
+      <div class="font-card-header">
+        <span class="font-name">Noto Naskh Arabic</span>
+        <span class="font-badge badge-modern">✨ Modern</span>
+      </div>
+      <div class="font-preview" id="preview-naskh"
+        style="font-family:'Noto Naskh Arabic',serif; font-size:22px;">
+        یہاں آپ کا متن نظر آئے گا
+      </div>
+      <div class="font-card-footer">
+        <button class="btn-copy-font" onclick="copyFont('preview-naskh', this)">📋 Copy Text</button>
+        <button class="btn-fullscreen" onclick="openModal('preview-naskh','Noto Naskh Arabic')">🔍 Full View</button>
+      </div>
+    </div>
+
+    <!-- Font 3: Serif -->
+    <div class="font-card">
+      <div class="font-card-header">
+        <span class="font-name">Traditional Nastaliq</span>
+        <span class="font-badge badge-classic">📜 Classic</span>
+      </div>
+      <div class="font-preview" id="preview-serif"
+        style="font-family:'Times New Roman',serif; font-size:22px;">
+        یہاں آپ کا متن نظر آئے گا
+      </div>
+      <div class="font-card-footer">
+        <button class="btn-copy-font" onclick="copyFont('preview-serif', this)">📋 Copy Text</button>
+        <button class="btn-fullscreen" onclick="openModal('preview-serif','Traditional Nastaliq')">🔍 Full View</button>
+      </div>
+    </div>
+
+    <!-- Font 4: Bold Nastaliq -->
+    <div class="font-card">
+      <div class="font-card-header">
+        <span class="font-name">Noto Nastaliq Bold</span>
+        <span class="font-badge badge-bold">💪 Bold</span>
+      </div>
+      <div class="font-preview" id="preview-bold"
+        style="font-family:'Noto Nastaliq Urdu',serif; font-size:22px; font-weight:700;">
+        یہاں آپ کا متن نظر آئے گا
+      </div>
+      <div class="font-card-footer">
+        <button class="btn-copy-font" onclick="copyFont('preview-bold', this)">📋 Copy Text</button>
+        <button class="btn-fullscreen" onclick="openModal('preview-bold','Noto Nastaliq Bold')">🔍 Full View</button>
+      </div>
+    </div>
+
+    <!-- Font 5: Large Display -->
+    <div class="font-card">
+      <div class="font-card-header">
+        <span class="font-name">Display Nastaliq</span>
+        <span class="font-badge badge-calligraphy">🎨 Calligraphy</span>
+      </div>
+      <div class="font-preview" id="preview-display"
+        style="font-family:'Noto Nastaliq Urdu',serif; font-size:26px; color:#7c3aed;">
+        یہاں آپ کا متن نظر آئے گا
+      </div>
+      <div class="font-card-footer">
+        <button class="btn-copy-font" onclick="copyFont('preview-display', this)">📋 Copy Text</button>
+        <button class="btn-fullscreen" onclick="openModal('preview-display','Display Nastaliq')">🔍 Full View</button>
+      </div>
+    </div>
+
+    <!-- Font 6: Naskh Modern -->
+    <div class="font-card">
+      <div class="font-card-header">
+        <span class="font-name">Naskh Modern Bold</span>
+        <span class="font-badge badge-modern">✨ Modern</span>
+      </div>
+      <div class="font-preview" id="preview-naskh-bold"
+        style="font-family:'Noto Naskh Arabic',serif; font-size:22px; font-weight:700;">
+        یہاں آپ کا متن نظر آئے گا
+      </div>
+      <div class="font-card-footer">
+        <button class="btn-copy-font" onclick="copyFont('preview-naskh-bold', this)">📋 Copy Text</button>
+        <button class="btn-fullscreen" onclick="openModal('preview-naskh-bold','Naskh Modern Bold')">🔍 Full View</button>
+      </div>
+    </div>
+
+    <!-- Font 7: Dark Theme Preview -->
+    <div class="font-card">
+      <div class="font-card-header">
+        <span class="font-name">Dark Nastaliq</span>
+        <span class="font-badge badge-bold">🌙 Dark</span>
+      </div>
+      <div class="font-preview" id="preview-dark"
+        style="font-family:'Noto Nastaliq Urdu',serif; font-size:22px; background:#1a1a2e; color:#e0e0e0; border-radius:8px;">
+        یہاں آپ کا متن نظر آئے گا
+      </div>
+      <div class="font-card-footer">
+        <button class="btn-copy-font" onclick="copyFont('preview-dark', this)">📋 Copy Text</button>
+        <button class="btn-fullscreen" onclick="openModal('preview-dark','Dark Nastaliq')">🔍 Full View</button>
+      </div>
+    </div>
+
+    <!-- Font 8: Green Theme -->
+    <div class="font-card">
+      <div class="font-card-header">
+        <span class="font-name">Green Nastaliq</span>
+        <span class="font-badge badge-calligraphy">💚 Pakistan</span>
+      </div>
+      <div class="font-preview" id="preview-green"
+        style="font-family:'Noto Nastaliq Urdu',serif; font-size:22px; color:#16a34a; font-weight:600;">
+        یہاں آپ کا متن نظر آئے گا
+      </div>
+      <div class="font-card-footer">
+        <button class="btn-copy-font" onclick="copyFont('preview-green', this)">📋 Copy Text</button>
+        <button class="btn-fullscreen" onclick="openModal('preview-green','Green Nastaliq')">🔍 Full View</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="info-card">
+    <div class="info-title">📖 How to Use — Istemal Ka Tarika</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Upar box mein Urdu text likhen ya paste karen</strong> — sare fonts mein foran nazar ayega</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Font Size slider</strong> se bada ya chota kar ke dekhen</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Pasand ka font chunen</strong> — "Full View" se bada dekhen</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>"Copy Text" click karen</strong> — text clipboard mein aa jayega</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-panel">
+    <a href="https://toolifyproonline.github.io/toolifyProonline/">🔧 Explore All Free Tools</a>
+  </div>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Font Preview</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-modal-close" onclick="closeModal()">Close</button>
+      <button class="btn-modal-copy" onclick="copyModalText()">📋 Copy Text</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>🚀 <a href="https://toolifyproonline.github.io/toolifyProonline/">ToolifyPro Online</a> — Free Tools, No Signup Required</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const sampleTexts = [
+  'پاکستان زندہ باد — ہم سب پاکستانی ہیں',
+  'علم حاصل کرنا ہر مسلمان پر فرض ہے',
+  'اردو ہماری قومی زبان ہے — اسے سیکھیں اور سکھائیں',
+  'محنت کرو — کامیابی ضرور ملے گی',
+  'بسم اللہ الرحمن الرحیم — اللہ کے نام سے شروع'
+];
+let sampleIndex = 0;
+let currentFontSize = 22;
+let modalPreviewId = '';
+
+function updateFonts() {
+  const text = document.getElementById('urduInput').value;
+  document.getElementById('charInfo').textContent = text.length + ' characters';
+
+  const previewIds = ['preview-noto','preview-naskh','preview-serif','preview-bold','preview-display','preview-naskh-bold','preview-dark','preview-green'];
+  const displayText = text.trim() || 'یہاں آپ کا متن نظر آئے گا';
+
+  previewIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.textContent = displayText;
+      el.style.fontSize = currentFontSize + 'px';
+    }
+  });
+}
+
+function updateSize() {
+  currentFontSize = document.getElementById('sizeSlider').value;
+  document.getElementById('sizeVal').textContent = currentFontSize + 'px';
+  updateFonts();
+}
+
+function loadSample() {
+  document.getElementById('urduInput').value = sampleTexts[sampleIndex % sampleTexts.length];
+  sampleIndex++;
+  updateFonts();
+  showToast('📝 Sample text load ho gaya!');
+}
+
+function clearText() {
+  document.getElementById('urduInput').value = '';
+  updateFonts();
+  document.getElementById('charInfo').textContent = '0 characters';
+  showToast('🗑️ Clear ho gaya!');
+}
+
+function copyFont(previewId, btn) {
+  const el = document.getElementById(previewId);
+  const text = document.getElementById('urduInput').value.trim() || el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy Text';
+      btn.classList.remove('copied');
+    }, 2000);
+    showToast('✅ Text copy ho gaya!');
+  });
+}
+
+function openModal(previewId, fontName) {
+  modalPreviewId = previewId;
+  const el = document.getElementById(previewId);
+  const modalBody = document.getElementById('modalBody');
+
+  // Copy styles from preview
+  modalBody.style.fontFamily = el.style.fontFamily;
+  modalBody.style.color = el.style.color || '#1f2937';
+  modalBody.style.background = el.style.background || 'transparent';
+  modalBody.style.fontSize = '28px';
+
+  const text = document.getElementById('urduInput').value.trim() || el.textContent;
+  modalBody.textContent = text;
+
+  document.getElementById('modalTitle').textContent = '🔤 ' + fontName;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function copyModalText() {
+  const text = document.getElementById('urduInput').value.trim() ||
+    document.getElementById('modalBody').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('✅ Copy ho gaya!');
+    closeModal();
+  });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
